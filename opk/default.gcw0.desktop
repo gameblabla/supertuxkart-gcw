@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SuperTuxKart
+Comment=SuperTuxKart
+Exec=sh gears.sh
+Icon=icon
+Terminal=false
+Categories=games;
