@@ -35,7 +35,7 @@ using namespace scene;
 PostProcessing::PostProcessing(video::IVideoDriver* video_driver)
 {
     // Check if post-processing is supported on this hardware
-    m_supported = false;
+   /* m_supported = false;
     if( irr_driver->isGLSL() )
     {
         m_supported = true;
@@ -81,7 +81,7 @@ PostProcessing::PostProcessing(video::IVideoDriver* video_driver)
         m_blur_material.Lighting = false;
         m_blur_material.ZWriteEnable = false;
 
-    }
+    }*/
 }   // PostProcessing
 
 // ----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ PostProcessing::~PostProcessing()
  */
 void PostProcessing::reset()
 {
-    unsigned int n = Camera::getNumCameras();
+   /* unsigned int n = Camera::getNumCameras();
     m_boost_time.resize(n);
     m_vertices.resize(n);
     m_center.resize(n);
@@ -149,7 +149,7 @@ void PostProcessing::reset()
         m_center[i].Y=m_vertices[i].v0.TCoords.Y + 0.2f*tex_height;
         m_direction[i].X = m_center[i].X;
         m_direction[i].Y = m_vertices[i].v0.TCoords.Y + 0.7f*tex_height;
-    }  // for i <number of cameras
+    }  // for i <number of cameras*/
 }   // reset
 
 // ----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void PostProcessing::reset()
  */
 void PostProcessing::beginCapture()
 {
-    if(!m_supported || !UserConfigParams::m_postprocess_enabled)
+   /* if(!m_supported || !UserConfigParams::m_postprocess_enabled)
         return;
 
     bool any_boost = false;
@@ -174,7 +174,7 @@ void PostProcessing::beginCapture()
     }
 
     m_used_pp_this_frame = true;
-    irr_driver->getVideoDriver()->setRenderTarget(m_render_target, true, true);
+    irr_driver->getVideoDriver()->setRenderTarget(m_render_target, true, true);*/
 }   // beginCapture
 
 // ----------------------------------------------------------------------------
@@ -182,19 +182,19 @@ void PostProcessing::beginCapture()
   */
 void PostProcessing::endCapture()
 {
-    if(!m_supported || !UserConfigParams::m_postprocess_enabled ||
+   /* if(!m_supported || !UserConfigParams::m_postprocess_enabled ||
         !m_used_pp_this_frame)
         return;
 
     irr_driver->getVideoDriver()->setRenderTarget(video::ERT_FRAME_BUFFER,
-                                                  true, true, 0);
+                                                  true, true, 0);*/
 }   // endCapture
 
 // ----------------------------------------------------------------------------
 /** Set the boost amount according to the speed of the camera */
 void PostProcessing::giveBoost(unsigned int camera_index)
 {
-    m_boost_time[camera_index] = 0.75f;
+   /* m_boost_time[camera_index] = 0.75f;*/
 }   // giveBoost
 
 // ----------------------------------------------------------------------------
@@ -203,21 +203,21 @@ void PostProcessing::giveBoost(unsigned int camera_index)
  */
 void PostProcessing::update(float dt)
 {
-    for(unsigned int i=0; i<m_boost_time.size(); i++)
+   /* for(unsigned int i=0; i<m_boost_time.size(); i++)
     {
         if (m_boost_time[i] > 0.0f)
         {
             m_boost_time[i] -= dt;
             if (m_boost_time[i] < 0.0f) m_boost_time[i] = 0.0f;
         }
-    }
+    }*/
 }   // update
 
 // ----------------------------------------------------------------------------
 /** Render the post-processed scene */
 void PostProcessing::render()
 {
-    if(!m_supported || !UserConfigParams::m_postprocess_enabled)
+    /*if(!m_supported || !UserConfigParams::m_postprocess_enabled)
         return;
 
     if (!m_used_pp_this_frame)
@@ -236,7 +236,7 @@ void PostProcessing::render()
         video_driver->setMaterial(m_blur_material);
         video_driver->drawIndexedTriangleList(&(m_vertices[m_current_camera].v0),
                                               4, &indices[0], 2);
-    }
+    }*/
 
 }   // render
 
@@ -247,7 +247,7 @@ void PostProcessing::OnSetConstants(video::IMaterialRendererServices *services,
                                     s32 user_data)
 {
     // We need the maximum texture coordinates:
-    float max_tex_height = m_vertices[m_current_camera].v1.TCoords.Y;
+    /*float max_tex_height = m_vertices[m_current_camera].v1.TCoords.Y;
     services->setPixelShaderConstant("max_tex_height", &max_tex_height, 1);
 
     // Scale the boost time to get a usable boost amount:
@@ -273,5 +273,5 @@ void PostProcessing::OnSetConstants(video::IMaterialRendererServices *services,
     float radius = Camera::getNumCameras()==1 ? 0.15f : 0.075f;
     services->setPixelShaderConstant("mask_radius", &radius, 1);
     const int texunit = 0;
-    services->setPixelShaderConstant("color_buffer", &texunit, 1);
+    services->setPixelShaderConstant("color_buffer", &texunit, 1);*/
 }   // OnSetConstants

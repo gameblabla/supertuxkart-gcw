@@ -41,24 +41,24 @@ Item::Item(ItemType type, const Vec3& xyz, const Vec3& normal,
     initItem(type, xyz);
     // Sets heading to 0, and sets pitch and roll depending on the normal. */
     m_original_hpr      = Vec3(0, normal);
-    m_original_mesh     = mesh;
+    m_original_mesh     = lowres_mesh;
     m_original_lowmesh  = lowres_mesh;
     m_listener          = NULL;
 
     LODNode* lodnode    = new LODNode("item",
                                       irr_driver->getSceneManager()->getRootSceneNode(),
                                       irr_driver->getSceneManager());
-    scene::IMeshSceneNode* meshnode = irr_driver->addMesh(mesh);
+    scene::IMeshSceneNode* meshnode = irr_driver->addMesh(lowres_mesh);
 
     if (lowres_mesh != NULL)
     {
-        lodnode->add(35, meshnode, true);
+        lodnode->add(22, meshnode, true);
         scene::IMeshSceneNode* meshnode = irr_driver->addMesh(lowres_mesh);
-        lodnode->add(100, meshnode, true);
+        lodnode->add(25, meshnode, true);
     }
     else
     {
-        lodnode->add(100, meshnode, true);
+        lodnode->add(22, meshnode, true);
     }
 
     m_node              = lodnode;

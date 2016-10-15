@@ -404,7 +404,7 @@ void SoccerWorld::initKartList()
     irr::video::ITexture *blueTeamTexture = irr_driver->getTexture(
                                    file_manager->getTextureFile("soccer_player_blue.png"));
     //Assigning indicators
-    for(unsigned int i=0; i<kart_amount; i++)
+    /*for(unsigned int i=0; i<kart_amount; i++)
     {
         scene::ISceneNode *arrowNode;
         float arrow_pos_height = m_karts[i]->getKartModel()->getHeight()+0.5f;
@@ -416,7 +416,7 @@ void SoccerWorld::initKartList()
             arrowNode = irr_driver->addBillboard(core::dimension2d<irr::f32>(0.3f,0.3f),
                                                blueTeamTexture,m_karts[i]->getNode(),true);
         arrowNode->setPosition(core::vector3df(0, arrow_pos_height, 0));
-    }
+    }*/
 
     // Compute start positions for each team
     int team_cur_position[NB_SOCCER_TEAMS];

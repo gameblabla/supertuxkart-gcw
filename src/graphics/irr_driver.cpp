@@ -1658,13 +1658,13 @@ void IrrDriver::update(float dt)
 
     const bool inRace = world!=NULL;
 
-    if (inRace)
+    /*if (inRace)
     {
         // Start the RTT for post-processing.
         // We do this before beginScene() because we want to capture the glClear()
         // because of tracks that do not have skyboxes (generally add-on tracks)
         m_post_processing->beginCapture();
-    }
+    }*/
 
     m_video_driver->beginScene(/*backBuffer clear*/ true, /*zBuffer*/ true,
                                world ? world->getClearColor()
@@ -1703,10 +1703,10 @@ void IrrDriver::update(float dt)
         }   // for i<world->getNumKarts()
 
         // Stop capturing for the post-processing
-        m_post_processing->endCapture();
+       /* m_post_processing->endCapture();
 
         // Render the post-processed scene
-        m_post_processing->render();
+        m_post_processing->render();*/
 
         // Set the viewport back to the full screen for race gui
         m_video_driver->setViewPort(core::recti(0, 0,
@@ -1815,7 +1815,7 @@ bool IrrDriver::supportsSplatting()
 IrrDriver::RTTProvider::RTTProvider(const core::dimension2du &dimension,
                                     const std::string &name, bool persistent_texture)
 {
-    m_persistent_texture = persistent_texture;
+    /*m_persistent_texture = persistent_texture;
     m_video_driver = irr_driver->getVideoDriver();
     m_render_target_texture =
         m_video_driver->addRenderTargetTexture(dimension,
@@ -1828,16 +1828,16 @@ IrrDriver::RTTProvider::RTTProvider(const core::dimension2du &dimension,
 
     m_rtt_main_node = NULL;
     m_camera        = NULL;
-    m_light         = NULL;
+    m_light         = NULL;*/
 }   // RTTProvider
 
 // ----------------------------------------------------------------------------
 IrrDriver::RTTProvider::~RTTProvider()
 {
-    tearDownRTTScene();
+    /*tearDownRTTScene();
 
     if (!m_persistent_texture)
-        irr_driver->removeTexture(m_render_target_texture);
+        irr_driver->removeTexture(m_render_target_texture);*/
 }   // ~RTTProvider
 
 // ----------------------------------------------------------------------------
@@ -1851,7 +1851,7 @@ void IrrDriver::RTTProvider::setupRTTScene(PtrVector<scene::IMesh, REF>& mesh,
                                            AlignedArray<Vec3>& mesh_scale,
                                            const std::vector<int>& model_frames)
 {
-    if (model_frames[0] == -1)
+   /* if (model_frames[0] == -1)
     {
         scene::ISceneNode* node =
             irr_driver->getSceneManager()->addMeshSceneNode(mesh.get(0), NULL);
@@ -1910,7 +1910,7 @@ void IrrDriver::RTTProvider::setupRTTScene(PtrVector<scene::IMesh, REF>& mesh,
     const core::vector3df &spot_pos = core::vector3df(0, 30, 40);
     m_light = irr_driver->getSceneManager()
         ->addLightSceneNode(NULL, spot_pos, video::SColorf(1.0f,1.0f,1.0f),
-                            1600 /* radius */);
+                            1600);
     m_light->setLightType(video::ELT_SPOT);
     m_light->setRotation((core::vector3df(0, 10, 0) - spot_pos).getHorizontalAngle());
     m_light->updateAbsolutePosition();
@@ -1942,20 +1942,20 @@ void IrrDriver::RTTProvider::setupRTTScene(PtrVector<scene::IMesh, REF>& mesh,
 
     // Detach the note from the scene so we can render it independently
     m_rtt_main_node->setVisible(false);
-    m_light->setVisible(false);
+    m_light->setVisible(false);*/
 }   // setupRTTScene
 
 // ----------------------------------------------------------------------------
 void IrrDriver::RTTProvider::tearDownRTTScene()
 {
     //if (m_rtt_main_node != NULL) m_rtt_main_node->drop();
-    if (m_rtt_main_node != NULL) m_rtt_main_node->remove();
+    /*if (m_rtt_main_node != NULL) m_rtt_main_node->remove();
     if (m_light != NULL) m_light->remove();
     if (m_camera != NULL) m_camera->remove();
 
     m_rtt_main_node = NULL;
     m_camera = NULL;
-    m_light = NULL;
+    m_light = NULL;*/
 }   // tearDownRTTScene
 
 // ----------------------------------------------------------------------------
@@ -1970,7 +1970,7 @@ video::ITexture* IrrDriver::RTTProvider::renderToTexture(float angle,
                                                          bool is_2d_render)
 {
     // m_render_target_texture will be NULL if RTT doesn't work on this computer
-    if (m_render_target_texture == NULL) return NULL;
+    /*if (m_render_target_texture == NULL) return NULL;
 
     // Rendering a 2d only model (using direct opengl rendering)
     // does not work if setRenderTarget is called here again.
@@ -1995,5 +1995,5 @@ video::ITexture* IrrDriver::RTTProvider::renderToTexture(float angle,
     }
 
     m_video_driver->setRenderTarget(0, false, false);
-    return m_render_target_texture;
+    return m_render_target_texture;*/
 }

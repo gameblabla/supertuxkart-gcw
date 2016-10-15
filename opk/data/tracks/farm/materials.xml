@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- Generated with script from SVN rev Unknown -->
 <materials>
-  <material name="corn.png" light="N"/>
+  <!--<material name="corn.png" light="N"/>
   <material name="earth.jpg" slowdown-time="2.00" max-speed="0.70">
     <particles base="smoke_brown.xml" condition="skid drive"/>
   </material>
@@ -25,5 +25,5 @@
   <material name="wheat.png" light="N" compositing="test"/>
   <material name="yellow_dirt.jpg" max-speed="0.70" slowdown-time="2.00">
     <particles base="smoke_yellow.xml" condition="skid drive"/>
-  </material>
+  </material>-->
 </materials>

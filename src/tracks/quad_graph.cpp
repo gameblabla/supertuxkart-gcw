@@ -970,12 +970,12 @@ video::ITexture *QuadGraph::makeMiniMap(const core::dimension2du &dimension,
                                         const std::string &name,
                                         const video::SColor &fill_color)
 {
-    IrrDriver::RTTProvider rttProvider(dimension, name, true);
+   /* IrrDriver::RTTProvider rttProvider(dimension, name, true);
     video::SColor red(128, 255, 0, 0);
-    createMesh(/*show_invisible part of the track*/ false,
-               /*enable_transparency*/ false,
-               /*track_color*/    &fill_color,
-               /*lap line color*/  &red                       );
+    createMesh(false,
+               false,
+               &fill_color,
+                &red                       );
 
     m_node = irr_driver->addMesh(m_mesh);   // add Debug Mesh
 #ifdef DEBUG
@@ -1049,7 +1049,7 @@ video::ITexture *QuadGraph::makeMiniMap(const core::dimension2du &dimension,
                         "mini-map will not be available.");
     }
 
-    return texture;
+    return texture;*/
 }   // makeMiniMap
 
 //-----------------------------------------------------------------------------

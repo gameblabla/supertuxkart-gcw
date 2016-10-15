@@ -2,7 +2,7 @@ CC = gcc
 CXX = g++
 LD = g++
 
-CFLAGS = -I/usr/include/SDL -O0 -I ngl
+CFLAGS = -I/usr/include/SDL -O0 -g -fsingle-precision-constant -ftree-vectorize
 CFLAGS += -I. -Ilib/enet/include -Isrc -Ilib/irrlicht/include -Ilib/bullet/src -I/usr/include/freetype2/freetype -I/usr/include/freetype2 -I/usr/include/AL
 CFLAGS += -DHAVE_OGGVORBIS -DNDEBUG
 CXXFLAGS = $(CFLAGS) -std=gnu++03

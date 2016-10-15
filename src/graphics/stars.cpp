@@ -43,7 +43,7 @@ Stars::Stars(scene::ISceneNode* parentKart, core::vector3df center)
 
     m_center = center;
 
-    for (int n=0; n<STAR_AMOUNT; n++)
+    /*for (int n=0; n<STAR_AMOUNT; n++)
     {
         scene::ISceneNode* billboard =
             irr_driver->addBillboard(core::dimension2df(STAR_SIZE, STAR_SIZE),
@@ -57,7 +57,7 @@ Stars::Stars(scene::ISceneNode* parentKart, core::vector3df center)
         billboard->setVisible(false);
 
         m_nodes.push_back(billboard);
-    }
+    }*/
 }   // Stars
 
 // ----------------------------------------------------------------------------

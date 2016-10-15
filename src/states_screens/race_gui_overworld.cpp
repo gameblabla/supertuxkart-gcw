@@ -297,41 +297,11 @@ void RaceGUIOverworld::drawGlobalMiniMap()
     World *world = World::getWorld();
     // arenas currently don't have a map.
     if(world->getTrack()->isArena() || world->getTrack()->isSoccer()) return;
-
     Track* track = world->getTrack();
-    const std::vector<OverworldChallenge>& challenges =
-                                                     track->getChallengeList();
-
-    // The trophies might be to the left of the minimap on large displays
-    // Adjust the left side of the minimap to take this into account.
-    // This can't be done in the constructor of this object, since at
-    // that time the scene.xml file has not been read (so the challenges
-    // are not defined yet).
-    if(m_is_first_render_call)
-    {
-        float left_most = 0;
-        for (unsigned int n=0; n<challenges.size(); n++)
-        {
-            Vec3 draw_at;
-            track->mapPoint2MiniMap(challenges[n].m_position, &draw_at);
-            if(draw_at.getX()<left_most) left_most = draw_at.getX();
-        }
-        m_map_left -= (int)left_most;
-    }
-
-
+    const std::vector<OverworldChallenge>& challenges = track->getChallengeList();
     const video::ITexture *mini_map = world->getTrack()->getMiniMap();
 
-    int upper_y = m_map_bottom - m_map_height;
     int lower_y = m_map_bottom;
-
-    if (mini_map != NULL)
-    {
-        core::rect<s32> dest(m_map_left,               upper_y,
-                             m_map_left + m_map_width, lower_y);
-        core::rect<s32> source(core::position2di(0, 0), mini_map->getOriginalSize());
-        irr_driver->getVideoDriver()->draw2DImage(mini_map, dest, source, 0, 0, true);
-    }
 
     Vec3 kart_xyz;
 
@@ -351,7 +321,6 @@ void RaceGUIOverworld::drawGlobalMiniMap()
                !=(only_draw_player_kart==1)) continue;
             kart_xyz= kart->getXYZ();
             Vec3 draw_at;
-            track->mapPoint2MiniMap(kart_xyz, &draw_at);
 
             core::rect<s32> source(i    *m_marker_rendered_size,
                                    0,
@@ -364,24 +333,6 @@ void RaceGUIOverworld::drawGlobalMiniMap()
                                      lower_y   -(int)(draw_at.getY()+marker_half_size),
                                      m_map_left+(int)(draw_at.getX()+marker_half_size),
                                      lower_y   -(int)(draw_at.getY()-marker_half_size));
-
-            // Highlight the player icons with some backgorund image.
-            if (kart->getController()->isPlayerController())
-            {
-                video::SColor colors[4];
-                for (unsigned int i=0;i<4;i++)
-                {
-                    colors[i]=kart->getKartProperties()->getColor();
-                }
-                const core::rect<s32> rect(core::position2d<s32>(0,0),
-                                           m_icons_frame->getTexture()->getOriginalSize());
-
-                irr_driver->getVideoDriver()->draw2DImage(m_icons_frame->getTexture(), position,
-                                                          rect, NULL, colors, true);
-            }   // if isPlayerController
-
-            irr_driver->getVideoDriver()->draw2DImage(m_marker, position, source,
-                                                      NULL, NULL, true);
         }   // for i<getNumKarts
     }   // for only_draw_player_kart
 
@@ -420,8 +371,6 @@ void RaceGUIOverworld::drawGlobalMiniMap()
                                    lower_y   -(int)(draw_at.getY()-marker_size/2));
             m_current_challenge = &(challenges[n]);
         }
-        irr_driver->getVideoDriver()->draw2DImage(m_icons[state],
-                                                  dest, source, NULL, NULL, true);
     }
 
 

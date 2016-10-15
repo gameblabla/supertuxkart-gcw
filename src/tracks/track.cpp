@@ -505,7 +505,7 @@ void Track::loadQuadGraph(unsigned int mode_id, const bool reverse)
             video_driver->queryFeature(video::EVDF_TEXTURE_NSQUARE);
 
         //Create the minimap resizing it as necessary.
-        m_mini_map_size = World::getWorld()->getRaceGUI()->getMiniMapSize();
+        /*m_mini_map_size = World::getWorld()->getRaceGUI()->getMiniMapSize();
         core::dimension2du size = m_mini_map_size
                                  .getOptimalSize(!nonpower,!nonsquare);
         m_mini_map = QuadGraph::get()->makeMiniMap(size, "minimap::"+m_ident);
@@ -518,15 +518,15 @@ void Track::loadQuadGraph(unsigned int mode_id, const bool reverse)
         {
             m_minimap_x_scale = 0;
             m_minimap_y_scale = 0;
-        }
+        }*/
     }
 }   // loadQuadGraph
 // -----------------------------------------------------------------------------
 void Track::mapPoint2MiniMap(const Vec3 &xyz, Vec3 *draw_at) const
 {
-    QuadGraph::get()->mapPoint2MiniMap(xyz, draw_at);
+    /*QuadGraph::get()->mapPoint2MiniMap(xyz, draw_at);
     draw_at->setX(draw_at->getX() * m_minimap_x_scale);
-    draw_at->setY(draw_at->getY() * m_minimap_y_scale);
+    draw_at->setY(draw_at->getY() * m_minimap_y_scale);*/
 }
 // -----------------------------------------------------------------------------
 /** Convert the track tree into its physics equivalents.
@@ -901,17 +901,17 @@ bool Track::loadMainTrack(const XMLNode &root)
 
             assert(GUIEngine::getHighresDigitFont() != NULL);
 
-            scene::ISceneNode* sn =
+            /*scene::ISceneNode* sn =
                 sm->addBillboardTextSceneNode(GUIEngine::getHighresDigitFont(),
                                               msg.c_str(),
                                               NULL,
                                               core::dimension2df(textsize.Width/45.0f,
                                                                  textsize.Height/45.0f),
                                               xyz,
-                                              -1 /* id */,
+                                              -1,
                                               video::SColor(255, 255, 225, 0),
                                               video::SColor(255, 255, 89, 0));
-            m_all_nodes.push_back(sn);
+            m_all_nodes.push_back(sn);*/
             if (!shown) continue;
         }
         else if (condition == "allchallenges")

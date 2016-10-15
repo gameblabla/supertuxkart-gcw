@@ -150,7 +150,7 @@ void RaceGUI::renderGlobal(float dt)
 
     // Special case : when 3 players play, use 4th window to display such
     // stuff (but we must clear it)
-    if (race_manager->getNumLocalPlayers() == 3 &&
+    /*if (race_manager->getNumLocalPlayers() == 3 &&
         !GUIEngine::ModalDialog::isADialogActive())
     {
         static video::SColor black = video::SColor(255,0,0,0);
@@ -161,7 +161,7 @@ void RaceGUI::renderGlobal(float dt)
                                               UserConfigParams::m_width,
                                               UserConfigParams::m_height));
     }
-
+*/
     World *world = World::getWorld();
     assert(world != NULL);
     if(world->getPhase() >= WorldStatus::READY_PHASE &&
@@ -180,14 +180,14 @@ void RaceGUI::renderGlobal(float dt)
     if (!m_is_tutorial)
     {
         drawGlobalTimer();
-        if(world->getPhase() == WorldStatus::GO_PHASE ||
+        /*if(world->getPhase() == WorldStatus::GO_PHASE ||
            world->getPhase() == WorldStatus::MUSIC_PHASE)
         {
             drawGlobalMusicDescription();
-        }
+        }*/
     }
 
-    drawGlobalMiniMap();
+   /* drawGlobalMiniMap();*/
 
     if (!m_is_tutorial &&
         (UserConfigParams::m_minimal_race_gui == false || world->getIdent() == IDENT_STRIKES))

@@ -452,38 +452,39 @@ void RaceGUIBase::update(float dt)
     {
         World *world = World::getWorld();
         // During GO move the referee up again
-        if(world->getPhase()==World::SETUP_PHASE)
+        switch(world->getPhase())
         {
-            m_referee_height = 10.0f;
-            m_referee->selectReadySetGo(0);   // set red color
-        }
-        else if(world->getPhase()==World::GO_PHASE)
-        {
-            m_referee_height += dt*5.0f;
-            m_referee->selectReadySetGo(2);
-        }
-        else if(world->getPhase()==World::TRACK_INTRO_PHASE)
-        {
-            m_referee->selectReadySetGo(0);   // set red color
-            m_referee_height -= dt*5.0f;
-            if(m_referee_height<0)
-               m_referee_height = 0;
-        }
-        else if(world->isStartPhase())  // must be ready or set now
-        {
-            m_referee_height = 0;
-            m_referee->selectReadySetGo(world->getPhase()==World::SET_PHASE
-                                        ? 1 : 0);
-        }
-        else if(world->getPhase()==World::IN_GAME_MENU_PHASE)
-        {
-            // Don't do anything, without this the next clause
-            // would completely remove thunderbird.
-        }
-        else if(m_referee->isAttached())   // race phase:
-        {
-            m_referee->removeFromSceneGraph();
-        }
+			case World::SETUP_PHASE:
+				m_referee_height = 10.0f;
+				m_referee->selectReadySetGo(0);   // set red color
+			break;
+			case World::GO_PHASE:
+				m_referee_height += dt*5.0f;
+				m_referee->selectReadySetGo(2);
+			break;
+			case World::TRACK_INTRO_PHASE:
+				m_referee->selectReadySetGo(0);   // set red color
+				m_referee_height -= dt*5.0f;
+				if(m_referee_height<0)
+				   m_referee_height = 0;
+			break;
+			case World::IN_GAME_MENU_PHASE:
+
+			break;
+			default:
+				if(world->isStartPhase())
+				{
+					m_referee_height = 0;
+					m_referee->selectReadySetGo(world->getPhase()==World::SET_PHASE
+												? 1 : 0);
+				}
+				else if(m_referee->isAttached())   // race phase:
+				{
+					m_referee->removeFromSceneGraph();
+				}
+			break;
+		}
+
     }   // if referee node
 }   // update
 
@@ -508,12 +509,12 @@ void RaceGUIBase::preRenderCallback(const Camera *camera)
 void RaceGUIBase::renderPlayerView(const Camera *camera, float dt)
 {
 #ifndef ANDROID
-    const core::recti &viewport = camera->getViewport();
+    /*const core::recti &viewport = camera->getViewport();
 
     if (m_lightning > 0.0f)
     {
 		//GCW0
-        /*GLint glviewport[4];
+        GLint glviewport[4];
         glviewport[0] = viewport.UpperLeftCorner.X;
         glviewport[1] = viewport.UpperLeftCorner.Y;
         glviewport[2] = viewport.LowerRightCorner.X;
@@ -536,8 +537,8 @@ void RaceGUIBase::renderPlayerView(const Camera *camera, float dt)
         glVertex3d(glviewport[2],glviewport[1],0);
         glEnd();
         glEnable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
-    }
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }*/
 #endif
 #if 0 // Rainy look, off, TODO: needs to be settable per track
     else

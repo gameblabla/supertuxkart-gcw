@@ -1970,8 +1970,8 @@ void Kart::updatePhysics(float dt)
     updateEnginePowerAndBrakes(dt);
 
     // apply flying physics if relevant
-    if (m_flying)
-        updateFlying();
+    /*if (m_flying)
+        updateFlying();*/
 
     m_skidding->update(dt, isOnGround(), m_controls.m_steer,
                        m_controls.m_skid);
@@ -2243,7 +2243,7 @@ void Kart::updateSliding()
  */
 void Kart::updateFlying()
 {
-    if (m_controls.m_accel)
+    /*if (m_controls.m_accel)
     {
         float orientation = getHeading();
         m_body->applyCentralImpulse(btVector3(60.0f*sin(orientation), 0.0,
@@ -2280,7 +2280,7 @@ void Kart::updateFlying()
     btVector3 velocity = m_body->getAngularVelocity();
     velocity.setX(0);
     velocity.setZ(0);
-    m_body->setAngularVelocity(velocity);
+    m_body->setAngularVelocity(velocity);*/
 
 }   // updateFlying
 
@@ -2520,32 +2520,6 @@ void Kart::updateGraphics(float dt, const Vec3& offset_xyz,
     Moveable::updateGraphics(dt, center_shift,
                              btQuaternion(heading, 0, m_current_lean));
 
-#ifdef XX
-    // cheap wheelie effect
-    if (m_controls.m_nitro)
-    {
-        m_node->updateAbsolutePosition();
-        m_kart_model->getWheelNodes()[0]->updateAbsolutePosition();
-        float wheel_y = m_kart_model->getWheelNodes()[0]->getAbsolutePosition().Y;
-
-        core::vector3df rot = m_node->getRotation();
-
-        float ratio = 0.8f;  //float(m_zipper_fire->getCreationRate())
-                //   /float(m_zipper_fire->getParticlesInfo()->getMaxRate());
-
-        const float a = (13.4f - ratio*13.0f);
-        float dst = -45.0f*sin((a*a)/180.f*M_PI);
-
-        rot.X = dst;
-        m_node->setRotation(rot);
-
-        m_node->updateAbsolutePosition();
-        m_kart_model->getWheelNodes()[0]->updateAbsolutePosition();
-        float wheel_y_after = m_kart_model->getWheelNodes()[0]->getAbsolutePosition().Y;
-
-        m_node->setPosition(m_node->getPosition() + core::vector3df(0,wheel_y_after - wheel_y,0));
-    }
-#endif
 
 }   // updateGraphics
 
@@ -2564,7 +2538,7 @@ btQuaternion Kart::getVisualRotation() const
  */
 void Kart::setOnScreenText(const wchar_t *text)
 {
-    core::dimension2d<u32> textsize = GUIEngine::getFont()->getDimension(text);
+    /*core::dimension2d<u32> textsize = GUIEngine::getFont()->getDimension(text);
     scene::ISceneManager* sm = irr_driver->getSceneManager();
     // FIXME: Titlefont is the only font guaranteed to be loaded if STK
     // is started without splash screen (since "Loading" is shown even in this
@@ -2576,12 +2550,12 @@ void Kart::setOnScreenText(const wchar_t *text)
                                   core::dimension2df(textsize.Width/55.0f,
                                                      textsize.Height/55.0f),
                                   core::vector3df(0.0f, 1.5f, 0.0f),
-                                  -1 /* id */,
+                                  -1,
                                   video::SColor(255, 255, 225, 0),
                                   video::SColor(255, 255, 89, 0));
     // No need to store the reference to the billboard scene node:
     // It has one reference to the parent, and will get deleted
-    // when the parent is deleted.
+    // when the parent is deleted.*/
 }   // setOnScreenText
 
 /* EOF */

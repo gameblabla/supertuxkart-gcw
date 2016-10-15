@@ -416,7 +416,7 @@ void TrackObjectPresentationSound::move(const core::vector3df& xyz, const core::
 TrackObjectPresentationBillboard::TrackObjectPresentationBillboard(const XMLNode& xml_node) :
     TrackObjectPresentationSceneNode(xml_node)
 {
-    std::string texture_name;
+    /*std::string texture_name;
     float       width, height;
 
     m_fade_out_start = 50.0f;
@@ -442,12 +442,12 @@ TrackObjectPresentationBillboard::TrackObjectPresentationBillboard(const XMLNode
     Material *stk_material = material_manager->getMaterial(texture_name);
     stk_material->setMaterialProperties(&(m_node->getMaterial(0)), NULL);
 
-    m_node->setPosition(m_init_xyz);
+    m_node->setPosition(m_init_xyz);*/
 }
 
 void TrackObjectPresentationBillboard::update(float dt)
 {
-    if (m_fade_out_when_close)
+   /* if (m_fade_out_when_close)
     {
         scene::ICameraSceneNode* curr_cam = irr_driver->getSceneManager()->getActiveCamera();
         const float dist =  m_node->getPosition().getDistanceFrom( curr_cam->getPosition() );
@@ -467,13 +467,13 @@ void TrackObjectPresentationBillboard::update(float dt)
             int a = (int)(255*(dist - m_fade_out_start) / (m_fade_out_end - m_fade_out_start));
             node->setColor(video::SColor(a, 255, 255, 255));
         }
-    }
+    }*/
 }
 
 TrackObjectPresentationBillboard::~TrackObjectPresentationBillboard()
 {
-    if (m_node)
-        irr_driver->removeNode(m_node);
+    /*if (m_node)
+        irr_driver->removeNode(m_node);*/
 }
 
 // ----------------------------------------------------------------------------
