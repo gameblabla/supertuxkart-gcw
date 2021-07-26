@@ -1,0 +1,47 @@
+TOOLCHAIN = /opt/funkey-toolchain
+CXX = $(TOOLCHAIN)/usr/bin/arm-linux-g++
+CC = $(TOOLCHAIN)/usr/bin/arm-linux-gcc
+
+#OPENGL_RENDERER
+
+CFLAGS	= -Ofast -fdata-sections -ffunction-sections  -fsingle-precision-constant
+CFLAGS += -fno-common -march=armv7-a+neon-vfpv4 -mtune=cortex-a7 -mfpu=neon-vfpv4 -fno-PIC -flto
+CFLAGS += -I/opt/funkey-toolchain/usr/arm-buildroot-linux-musleabihf/sysroot/usr/include/SDL
+CFLAGS += -I. -Ilib/enet/include -Isrc -Ilib/irrlicht/include -Ilib/bullet/src 
+CFLAGS += -I/opt/funkey-toolchain/usr/arm-buildroot-linux-musleabihf/sysroot/usr/include/freetype2/freetype
+CFLAGS += -I/opt/funkey-toolchain/usr/arm-buildroot-linux-musleabihf/sysroot/usr/include/freetype2 -I/opt/funkey-toolchain/usr/arm-buildroot-linux-musleabihf/sysroot/usr/include/AL
+CFLAGS += -DHAVE_OGGVORBIS -DNDEBUG -DFUNKEY -D_16BPP -DGKD350H
+
+ifeq ($(PROFILE), YES)
+CFLAGS 		+= -fprofile-generate=/media/roms/stk_gcda
+else ifeq ($(PROFILE), APPLY)
+CFLAGS		+= -fprofile-use -fbranch-probabilities
+endif
+
+CXXFLAGS = $(CFLAGS) -std=gnu++03 -ftree-vectorize
+
+#-lGL -lEGL -lpreload 
+
+LDFLAGS = -Wl,--start-group -lc -lgcc -lstdc++ -lSDL -logg -lvorbis -lvorbisfile -lasound -lpng -ljpeg -lz -lopenal -lcurl -lm -pthread -flto -Wl,-z,norelro -Wl,--hash-style=gnu -Wl,--build-id=none -Wl,-O1,--sort-common,--as-needed,--gc-sections -flto -no-pie -s -Wl,--end-group
+ifeq ($(PROFILE), YES)
+LDFLAGS += -lgcov
+endif
+
+EXE = stk.elf
+OBJS = $(patsubst %.c, %.o, $(shell find . -name \*.c))
+OBJS += $(patsubst %.cpp, %.o, $(shell find . -name \*.cpp))
+OBJS += $(patsubst %.S, %.o, $(shell find . -name \*.S))
+
+all: $(EXE)
+
+%.o: %.cpp
+	@echo Compiling $<...
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS)  $^ -o $@ $(LDFLAGS)
+
+.PHONY: clean
+clean:
+	rm -f `find . -name \*.o`
+	rm -f $(EXE)

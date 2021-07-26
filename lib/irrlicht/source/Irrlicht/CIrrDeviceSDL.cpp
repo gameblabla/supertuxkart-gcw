@@ -20,6 +20,8 @@
 #include <SDL/SDL_syswm.h>
 #include <SDL/SDL_video.h>
 
+#include "global_config.h"
+
 #ifdef _MSC_VER
 #pragma comment(lib, "SDL.lib")
 #endif // _MSC_VER
@@ -415,6 +417,12 @@ bool CIrrDeviceSDL::run()
 					key = (EKEY_CODE)0;
 				else
 					key = (EKEY_CODE)KeyMap[idx].Win32Key;
+					
+				if (SDL_event.key.keysym.sym == SDLK_HOME || SDL_event.key.keysym.sym == SDLK_RCTRL)
+				{
+					Close = true;
+					break;
+				}
 
 #ifdef _IRR_WINDOWS_API_
 				// handle alt+f4 in Windows, because SDL seems not to
@@ -737,7 +745,7 @@ video::IVideoModeList* CIrrDeviceSDL::getVideoModeList()
 			}
 		}
 	}*/
-	VideoModeList.addMode(core::dimension2d<u32>(320, 240), 32);
+	VideoModeList.addMode(core::dimension2d<u32>(CURRENT_RES_WIDTH, CURRENT_RES_HEIGHT), CURRENT_BPP);
 
 	return &VideoModeList;
 }

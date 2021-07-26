@@ -53,6 +53,8 @@ using irr::core::stringw;
 #include "utils/ptr_vector.hpp"
 #include "utils/time.hpp"
 
+#include "global_config.h"
+
 class PlayerProfile;
 class SavedGrandPrix;
 class XMLNode;
@@ -393,19 +395,19 @@ namespace UserConfigParams
         PARAM_DEFAULT( GroupUserConfigParam("Video", "Video Settings") );
 
     PARAM_PREFIX IntUserConfigParam         m_width
-            PARAM_DEFAULT(  IntUserConfigParam(320, "width", &m_video_group,
+            PARAM_DEFAULT(  IntUserConfigParam(CURRENT_RES_WIDTH, "width", &m_video_group,
                                             "Screen/window width in pixels") );
     PARAM_PREFIX IntUserConfigParam         m_height
-            PARAM_DEFAULT(  IntUserConfigParam(240, "height", &m_video_group,
+            PARAM_DEFAULT(  IntUserConfigParam(CURRENT_RES_HEIGHT, "height", &m_video_group,
                                            "Screen/window height in pixels") );
     PARAM_PREFIX BoolUserConfigParam        m_fullscreen
             PARAM_DEFAULT(  BoolUserConfigParam(false, "fullscreen",
                                                 &m_video_group) );
     PARAM_PREFIX IntUserConfigParam         m_prev_width
-            PARAM_DEFAULT(  IntUserConfigParam(320, "prev_width",
+            PARAM_DEFAULT(  IntUserConfigParam(CURRENT_RES_WIDTH, "prev_width",
                             &m_video_group, "Previous screen/window width") );
     PARAM_PREFIX IntUserConfigParam         m_prev_height
-            PARAM_DEFAULT(  IntUserConfigParam(240, "prev_height",
+            PARAM_DEFAULT(  IntUserConfigParam(CURRENT_RES_HEIGHT, "prev_height",
                             &m_video_group,"Previous screen/window height") );
     PARAM_PREFIX BoolUserConfigParam        m_prev_fullscreen
             PARAM_DEFAULT(  BoolUserConfigParam(false, "prev_fullscreen",

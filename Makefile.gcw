@@ -14,7 +14,7 @@ CXXFLAGS = $(CFLAGS) -std=gnu++03 -ftree-vectorize
 #-lGL -lEGL -lpreload 
 
 LDFLAGS = -lc -lgcc -lSDL -lpng -ljpeg -lz -lopenal -logg -lvorbis -lvorbisfile -lcurl -lm -pthread -Wl,--gc-sections -flto -s
-EXE = opk/stk.elf
+EXE = stk.elf
 OBJS = $(patsubst %.c, %.o, $(shell find . -name \*.c))
 OBJS += $(patsubst %.cpp, %.o, $(shell find . -name \*.cpp))
 OBJS += $(patsubst %.S, %.o, $(shell find . -name \*.S))

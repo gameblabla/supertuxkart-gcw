@@ -45,7 +45,14 @@
 
 
 //! Uncomment this line to compile with the SDL device
+#ifdef GKD350H
+//#define _IRR_COMPILE_WITH_FB_DEVICE_
 #define _IRR_COMPILE_WITH_SDL_DEVICE_
+#else
+#define _IRR_COMPILE_WITH_SDL_DEVICE_
+#endif
+
+
 #ifdef NO_IRR_COMPILE_WITH_SDL_DEVICE_
 #undef _IRR_COMPILE_WITH_SDL_DEVICE_
 #endif

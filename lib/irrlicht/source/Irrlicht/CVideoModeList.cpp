@@ -5,6 +5,8 @@
 #include "CVideoModeList.h"
 #include "irrMath.h"
 
+#include "global_config.h"
+
 namespace irr
 {
 namespace video
@@ -17,8 +19,8 @@ CVideoModeList::CVideoModeList()
 	setDebugName("CVideoModeList");
 	#endif
 
-	Desktop.depth = 32;
-	Desktop.size = core::dimension2d<u32>(320,240);
+	Desktop.depth = CURRENT_BPP;
+	Desktop.size = core::dimension2d<u32>(CURRENT_RES_WIDTH,CURRENT_RES_HEIGHT);
 }
 
 
@@ -43,7 +45,7 @@ core::dimension2d<u32> CVideoModeList::getVideoModeResolution(s32 modeNumber) co
 		return core::dimension2d<u32>(0,0);
 
 	return VideoModes[modeNumber].size;*/
-	return core::dimension2d<u32>(320,240);
+	return core::dimension2d<u32>(CURRENT_RES_WIDTH,CURRENT_RES_HEIGHT);
 }
 
 

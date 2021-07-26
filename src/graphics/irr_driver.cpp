@@ -48,6 +48,8 @@
 #include "utils/log.hpp"
 #include "utils/profiler.hpp"
 
+#include "global_config.h"
+
 #include <irrlicht.h>
 
 /* Build-time check that the Irrlicht we're building against works for us.
@@ -82,8 +84,8 @@ namespace X11
 /** singleton */
 IrrDriver *irr_driver = NULL;
 
-const int MIN_SUPPORTED_HEIGHT = 240;
-const int MIN_SUPPORTED_WIDTH  = 320;
+const int MIN_SUPPORTED_HEIGHT = CURRENT_RES_HEIGHT;
+const int MIN_SUPPORTED_WIDTH  = CURRENT_RES_WIDTH;
 
 // ----------------------------------------------------------------------------
 /** The constructor creates the irrlicht device. It first creates a NULL
@@ -285,8 +287,8 @@ void IrrDriver::initDevice()
         {
             Log::warn("irr_driver", "The window size specified in "
                       "user config is larger than your screen!");
-            UserConfigParams::m_width = 320;
-            UserConfigParams::m_height = 240;
+            UserConfigParams::m_width = CURRENT_RES_WIDTH;
+            UserConfigParams::m_height = CURRENT_RES_HEIGHT;
         }*/
 
         m_device->closeDevice();
@@ -313,8 +315,8 @@ void IrrDriver::initDevice()
          * EDT_BURNINGSVIDEO
          * EDT_OPENGL
         */
-			UserConfigParams::m_width  = 320;
-            UserConfigParams::m_height = 240;
+			UserConfigParams::m_width  = CURRENT_RES_WIDTH;
+            UserConfigParams::m_height = CURRENT_RES_HEIGHT;
             UserConfigParams::m_fullscreen = 1;
             UserConfigParams::m_vsync = 0;
 			#ifdef OPENGL_RENDERER
@@ -322,7 +324,11 @@ void IrrDriver::initDevice()
 			#else
             params.DriverType    = video::EDT_BURNINGSVIDEO;
             #endif
-            params.Bits          = 32;
+			#ifdef _16BPP
+			params.Bits          = 16;
+			#else
+			params.Bits          = 32;
+			#endif
             params.EventReceiver = this;
             params.Fullscreen    = UserConfigParams::m_fullscreen;
             params.Vsync         = UserConfigParams::m_vsync;
@@ -384,13 +390,17 @@ void IrrDriver::initDevice()
         // size is the problem
         if(!m_device)
         {
-            UserConfigParams::m_width  = 320;
-            UserConfigParams::m_height = 240;
+            UserConfigParams::m_width  = CURRENT_RES_WIDTH;
+            UserConfigParams::m_height = CURRENT_RES_HEIGHT;
 
             m_device = createDevice(params.DriverType,
                         core::dimension2du(UserConfigParams::m_width,
                                            UserConfigParams::m_height ),
+                                    #ifdef _16BPP
+                                    16,
+                                    #else
                                     32, //bits per pixel
+                                    #endif
                                     UserConfigParams::m_fullscreen,
                                     false,  // stencil buffers
                                     false,  // vsync
