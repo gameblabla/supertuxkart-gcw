@@ -885,7 +885,7 @@ namespace core
 		//const core::vector3d<f64> invScale(core::reciprocal(scale.X),core::reciprocal(scale.Y),core::reciprocal(scale.Z));
 		const core::vector3d<f32> invScale(core::reciprocal(scale.X),core::reciprocal(scale.Y),core::reciprocal(scale.Z));
 		//f64 Y = -asin(core::clamp(mat[2]*invScale.X, -1.0, 1.0));
-		f32 Y = -asin(core::clamp(mat[2]*invScale.X, -1.0, 1.0));
+		f32 Y = -asin(core::clamp(mat[2]*invScale.X, -1.0f, 1.0f));
 		const f64 C = cos(Y);
 		Y *= RADTODEG64;
 

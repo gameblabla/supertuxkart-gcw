@@ -28,8 +28,10 @@
 	#include <OpenGL/gl.h>
 #elif defined(_IRR_COMPILE_WITH_SDL_DEVICE_)
 	#define NO_SDL_GLEXT
+	#ifdef OPENGL_RENDERER
 	#include <SDL/SDL_video.h>
 	#include <SDL/SDL_opengl.h>
+	#endif
 #else
 	#if defined(_IRR_OSX_PLATFORM_)
 		#include <OpenGL/gl.h>

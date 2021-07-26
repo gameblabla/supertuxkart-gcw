@@ -17,8 +17,8 @@ CVideoModeList::CVideoModeList()
 	setDebugName("CVideoModeList");
 	#endif
 
-	Desktop.depth = 0;
-	Desktop.size = core::dimension2d<u32>(0,0);
+	Desktop.depth = 32;
+	Desktop.size = core::dimension2d<u32>(320,240);
 }
 
 
@@ -39,10 +39,11 @@ s32 CVideoModeList::getVideoModeCount() const
 //! Returns the screen size of a video mode in pixels.
 core::dimension2d<u32> CVideoModeList::getVideoModeResolution(s32 modeNumber) const
 {
-	if (modeNumber < 0 || modeNumber > (s32)VideoModes.size())
+	/*if (modeNumber < 0 || modeNumber > (s32)VideoModes.size())
 		return core::dimension2d<u32>(0,0);
 
-	return VideoModes[modeNumber].size;
+	return VideoModes[modeNumber].size;*/
+	return core::dimension2d<u32>(320,240);
 }
 
 
@@ -50,12 +51,12 @@ core::dimension2d<u32> CVideoModeList::getVideoModeResolution(
 		const core::dimension2d<u32>& minSize,
 		const core::dimension2d<u32>& maxSize) const
 {
-	u32 best=VideoModes.size();
+	/*u32 best=VideoModes.size();
 	// if only one or no mode
-	if (best<2)
+	if (best<2)*/
 		return getVideoModeResolution(0);
 
-	u32 i;
+	/*u32 i;
 	for (i=0; i<VideoModes.size(); ++i)
 	{
 		if (VideoModes[i].size.Width>=minSize.Width &&
@@ -81,14 +82,14 @@ core::dimension2d<u32> CVideoModeList::getVideoModeResolution(
 			best=i;
 		}
 	}
-	return VideoModes[best].size;
+	return VideoModes[best].size;*/
 }
 
 
 //! Returns the pixel depth of a video mode in bits.
 s32 CVideoModeList::getVideoModeDepth(s32 modeNumber) const
 {
-	if (modeNumber < 0 || modeNumber > (s32)VideoModes.size())
+	//if (modeNumber < 0 || modeNumber > (s32)VideoModes.size())
 		return 0;
 
 	return VideoModes[modeNumber].depth;

@@ -2,7 +2,7 @@
 Type=Application
 Name=SuperTuxKart
 Comment=SuperTuxKart
-Exec=sh gears.sh
+Exec=run.sh
 Icon=icon
 Terminal=false
 Categories=games;

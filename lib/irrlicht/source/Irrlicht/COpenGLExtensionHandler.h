@@ -47,8 +47,10 @@
 		#define GLX_GLXEXT_PROTOTYPES 1
 	#endif
 	#define NO_SDL_GLEXT
+	#ifdef OPENGL_RENDERER
 	#include <SDL/SDL_video.h>
 	#include <SDL/SDL_opengl.h>
+	#endif
 	#include "glext.h"
 #else
 	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)

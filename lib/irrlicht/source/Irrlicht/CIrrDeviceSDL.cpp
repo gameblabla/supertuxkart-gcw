@@ -63,6 +63,7 @@ CIrrDeviceSDL::CIrrDeviceSDL(const SIrrlichtCreationParameters& param)
 	setDebugName("CIrrDeviceSDL");
 	#endif
 
+	SDL_ShowCursor(SDL_DISABLE);
 	// Initialize SDL... Timer for sleep, video for the obvious, and
 	// noparachute prevents SDL from catching fatal errors.
 	if (SDL_Init( SDL_INIT_TIMER|SDL_INIT_VIDEO/*|
@@ -74,6 +75,7 @@ CIrrDeviceSDL::CIrrDeviceSDL(const SIrrlichtCreationParameters& param)
 		os::Printer::log( "Unable to initialize SDL!", SDL_GetError());
 		Close = true;
 	}
+	SDL_ShowCursor(SDL_DISABLE);
 /*
 #if defined(_IRR_WINDOWS_)
 	SDL_putenv("SDL_VIDEODRIVER=directx");
@@ -104,12 +106,16 @@ CIrrDeviceSDL::CIrrDeviceSDL(const SIrrlichtCreationParameters& param)
 
 	(void)SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
+	#ifdef OPENGL_RENDERER
 	if ( CreationParams.Fullscreen )
 		SDL_Flags |= SDL_FULLSCREEN;
 	if (CreationParams.DriverType == video::EDT_OPENGL)
 		SDL_Flags |= SDL_OPENGL;
 	else if (CreationParams.Doublebuffer)
 		SDL_Flags |= SDL_DOUBLEBUF;
+	#else
+		SDL_Flags = SDL_SWSURFACE;
+	#endif
 	// create window
 	if (CreationParams.DriverType != video::EDT_NULL)
 	{
@@ -145,6 +151,7 @@ bool CIrrDeviceSDL::createWindow()
 	if ( Close )
 		return false;
 
+	#ifdef OPENGL_RENDERER
 	if (CreationParams.DriverType == video::EDT_OPENGL)
 	{
 		if (CreationParams.Bits==16)
@@ -193,14 +200,22 @@ bool CIrrDeviceSDL::createWindow()
 		}
 	}
 	else if ( !Screen )
+	#endif
+		SDL_ShowCursor(SDL_DISABLE);
 		Screen = SDL_SetVideoMode( Width, Height, CreationParams.Bits, SDL_Flags );
+
+	printf(" Width %d, Height %d, CreationParams.Bits %d\n", Width, Height, CreationParams.Bits);
 
 	if ( !Screen && CreationParams.Doublebuffer)
 	{
+		printf("Screen not created\n");
+		#ifdef OPENGL_RENDERER
 		// Try single buffer
 		if (CreationParams.DriverType == video::EDT_OPENGL)
 			SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+		#endif
 		SDL_Flags &= ~SDL_DOUBLEBUF;
+		SDL_ShowCursor(0);
 		Screen = SDL_SetVideoMode( Width, Height, CreationParams.Bits, SDL_Flags );
 	}
 	if ( !Screen )
@@ -208,6 +223,7 @@ bool CIrrDeviceSDL::createWindow()
 		os::Printer::log( "Could not initialize display!" );
 		return false;
 	}
+	
 
 	return true;
 }
@@ -436,6 +452,7 @@ bool CIrrDeviceSDL::run()
 			{
 				Width = SDL_event.resize.w;
 				Height = SDL_event.resize.h;
+				SDL_ShowCursor(0);
 				Screen = SDL_SetVideoMode( Width, Height, 0, SDL_Flags );
 				if (VideoDriver)
 					VideoDriver->OnResize(core::dimension2d<u32>(Width, Height));
@@ -704,7 +721,7 @@ void CIrrDeviceSDL::closeDevice()
 //! \return Pointer to a list with all video modes supported
 video::IVideoModeList* CIrrDeviceSDL::getVideoModeList()
 {
-	if (!VideoModeList.getVideoModeCount())
+	/*if (!VideoModeList.getVideoModeCount())
 	{
 		// enumerate video modes.
 		const SDL_VideoInfo *vi = SDL_GetVideoInfo();
@@ -719,7 +736,8 @@ video::IVideoModeList* CIrrDeviceSDL::getVideoModeList()
 					VideoModeList.addMode(core::dimension2d<u32>(modes[i]->w, modes[i]->h), vi->vfmt->BitsPerPixel);
 			}
 		}
-	}
+	}*/
+	VideoModeList.addMode(core::dimension2d<u32>(320, 240), 32);
 
 	return &VideoModeList;
 }
@@ -728,6 +746,7 @@ video::IVideoModeList* CIrrDeviceSDL::getVideoModeList()
 //! Sets if the window should be resizable in windowed mode.
 void CIrrDeviceSDL::setResizable(bool resize)
 {
+	SDL_ShowCursor(0);
 	if (resize != Resizable)
 	{
 		if (resize)

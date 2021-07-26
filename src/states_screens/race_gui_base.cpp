@@ -30,7 +30,9 @@
 #  ifdef ANDROID
 #    include <GLES/gl.h>
 #  else
+#ifdef OPENGL_RENDERER
 #    include <GL/gl.h>
+#endif
 #  endif
 #endif
 

@@ -157,7 +157,10 @@ If not defined, Windows Multimedia library is used, which offers also broad supp
 //! Define _IRR_COMPILE_WITH_OPENGL_ to compile the Irrlicht engine with OpenGL.
 /** If you do not wish the engine to be compiled with OpenGL, comment this
 define out. */
+#ifdef OPENGL_RENDERER
 #define _IRR_COMPILE_WITH_OPENGL_
+#endif
+
 //#define NO_IRR_COMPILE_WITH_OPENGL_
 #ifdef NO_IRR_COMPILE_WITH_OPENGL_
 #undef _IRR_COMPILE_WITH_OPENGL_
@@ -166,7 +169,9 @@ define out. */
 //! Define _IRR_COMPILE_WITH_SOFTWARE_ to compile the Irrlicht engine with software driver
 /** If you do not need the software driver, or want to use Burning's Video instead,
 comment this define out */
+#ifndef OPENGL_RENDERER
 #define _IRR_COMPILE_WITH_SOFTWARE_
+#endif
 
 #ifdef NO_IRR_COMPILE_WITH_SOFTWARE_
 #undef _IRR_COMPILE_WITH_SOFTWARE_

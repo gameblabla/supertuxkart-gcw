@@ -36,7 +36,7 @@
 
 // _SOCKLEN_T is used on OSX
 #if !defined(HAS_SOCKLEN_T) && !defined(_SOCKLEN_T) \
-                            && !defined(__socklen_t_defined)
+                            && !defined(__socklen_t_defined) && !defined(GKD350H)
 typedef int socklen_t;
 #endif
 

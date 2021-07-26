@@ -280,14 +280,14 @@ void IrrDriver::initDevice()
 
         const core::dimension2d<u32> ssize = m_device->getVideoModeList()
                                                      ->getDesktopResolution();
-        if (UserConfigParams::m_width > (int)ssize.Width ||
+        /*if (UserConfigParams::m_width > (int)ssize.Width ||
             UserConfigParams::m_height > (int)ssize.Height)
         {
             Log::warn("irr_driver", "The window size specified in "
                       "user config is larger than your screen!");
             UserConfigParams::m_width = 320;
             UserConfigParams::m_height = 240;
-        }
+        }*/
 
         m_device->closeDevice();
         m_video_driver  = NULL;
@@ -313,17 +313,42 @@ void IrrDriver::initDevice()
          * EDT_BURNINGSVIDEO
          * EDT_OPENGL
         */
+			UserConfigParams::m_width  = 320;
+            UserConfigParams::m_height = 240;
+            UserConfigParams::m_fullscreen = 1;
+            UserConfigParams::m_vsync = 0;
+			#ifdef OPENGL_RENDERER
+			params.DriverType    = video::EDT_OPENGL;
+			#else
+            params.DriverType    = video::EDT_BURNINGSVIDEO;
+            #endif
+            params.Bits          = 32;
+            params.EventReceiver = this;
+            params.Fullscreen    = UserConfigParams::m_fullscreen;
+            params.Vsync         = UserConfigParams::m_vsync;
+            params.WindowSize    =
+                core::dimension2du(UserConfigParams::m_width,
+                                   UserConfigParams::m_height);
+			m_device = createDeviceEx(params);
 
         // Try 32 and, upon failure, 24 then 16 bit per pixels
-        for (int bits=32; bits>15; bits -=8)
+        /*for (int bits=32; bits>15; bits -=8)
         {
             if(UserConfigParams::logMisc())
                 Log::verbose("irr_driver", "Trying to create device with "
                              "%i bits\n", bits);
 
-            params.DriverType    = video::EDT_OPENGL;
+			#ifdef OPENGL_RENDERER
+			params.DriverType    = video::EDT_OPENGL;
+			#else
+            params.DriverType    = video::EDT_BURNINGSVIDEO;
+            #endif
             params.Stencilbuffer = false;
-            params.Bits          = bits;
+            #ifdef BPP_32
+            params.Bits          = 32;
+            #else
+            params.Bits          = 16;
+            #endif
             params.EventReceiver = this;
             params.Fullscreen    = UserConfigParams::m_fullscreen;
             params.Vsync         = UserConfigParams::m_vsync;
@@ -353,7 +378,7 @@ void IrrDriver::initDevice()
             if(m_device)
                 break;
         }   // for bits=32, 24, 16
-
+*/
 
         // if still no device, try with a standard 800x600 window size, maybe
         // size is the problem
@@ -362,7 +387,7 @@ void IrrDriver::initDevice()
             UserConfigParams::m_width  = 320;
             UserConfigParams::m_height = 240;
 
-            m_device = createDevice(video::EDT_OPENGL,
+            m_device = createDevice(params.DriverType,
                         core::dimension2du(UserConfigParams::m_width,
                                            UserConfigParams::m_height ),
                                     32, //bits per pixel

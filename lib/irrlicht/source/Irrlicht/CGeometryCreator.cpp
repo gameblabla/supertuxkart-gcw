@@ -461,7 +461,7 @@ IMesh* CGeometryCreator::createSphereMesh(f32 radius, u32 polyCountX, u32 polyCo
 			if (y==0)
 			{
 				if (normal.Y != -1.0f && normal.Y != 1.0f)
-					tu = static_cast<f32>(acos(core::clamp(normal.X/sinay, -1.0, 1.0)) * 0.5 *core::RECIPROCAL_PI64);
+					tu = static_cast<f32>(acos(core::clamp(normal.X/sinay, -1.0f, 1.0f)) * 0.5f *core::RECIPROCAL_PI64);
 				if (normal.Z < 0.0f)
 					tu=1-tu;
 			}

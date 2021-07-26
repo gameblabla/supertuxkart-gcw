@@ -5,9 +5,25 @@ LD = g++
 CFLAGS = -I/usr/include/SDL -O0 -I ngl
 CFLAGS += -I. -Ilib/enet/include -Isrc -Ilib/irrlicht/include -Ilib/bullet/src -I/usr/include/freetype2/freetype -I/usr/include/freetype2 -I/usr/include/AL
 CFLAGS += -DHAVE_OGGVORBIS -DNDEBUG
+
+ifeq ($(PROFILE), YES)
+CFLAGS 		+= -fprofile-generate=./
+else ifeq ($(PROFILE), APPLY)
+CFLAGS		+= -fprofile-use -fbranch-probabilities
+endif
+
+ifeq ($(OPENGL), 1)
+CFLAGS 		+= -DOPENGL_RENDERER
+endif
+
 CXXFLAGS = $(CFLAGS) -std=gnu++03
 
 LDFLAGS = -lSDL -lm -lpng -ljpeg -lGL -lz -lopenal -logg -lvorbis -lvorbisfile -lcurl -pthread -Wl,--gc-sections -flto 
+
+ifeq ($(PROFILE), YES)
+LDFLAGS 		+= -lgcov
+endif
+
 EXE = gears
 OBJS = $(patsubst %.c, %.o, $(shell find . -name \*.c))
 OBJS += $(patsubst %.cpp, %.o, $(shell find . -name \*.cpp))

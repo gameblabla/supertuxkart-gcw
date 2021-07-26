@@ -627,7 +627,7 @@ inline void quaternion::toEuler(vector3df& euler) const
 		// bank = rotation about x-axis
 		euler.X = (f32) atan2(2.0 * (Y*Z +X*W),(-sqx - sqy + sqz + sqw));
 		// attitude = rotation about y-axis
-		euler.Y = (f32) asin( clamp(test, -1.0, 1.0) );
+		euler.Y = (f32) asin( clamp(test, -1.0f, 1.0f) );
 	}
 }
 
